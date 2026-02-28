@@ -18,28 +18,35 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const PYTHON_BACKEND_URL =
   process.env.PYTHON_BACKEND_URL || "http://localhost:5000";
-const DATA_PATH = path.join(__dirname, "..", "Frontend_main", "assets", "data", "children.json");
+const DATA_PATH = path.join(
+  __dirname,
+  "..",
+  "Frontend_main",
+  "assets",
+  "data",
+  "children.json",
+);
 
 // Check if MongoDB is connected
 const useDatabase = () => {
   return require("mongoose").connection.readyState === 1;
 };
 
-
 // Optional font paths (add these files to assets/fonts to enable Unicode/IPA)
+// In production (Docker), files are at /app/assets/fonts/
+// In development, files are at ../Frontend_main/assets/fonts/
+const isProduction = process.env.NODE_ENV === "production";
+const assetsPath = isProduction
+  ? path.join(__dirname, "assets")
+  : path.join(__dirname, "..", "Frontend_main", "assets");
+
 const FONT_KANNADA_VAR = path.join(
-  __dirname,
-  "..",
-  "Frontend_main",
-  "assets",
+  assetsPath,
   "fonts",
   "NotoSansKannada-VariableFont_wdth,wght.ttf",
 );
 const FONT_KANNADA_REG = path.join(
-  __dirname,
-  "..",
-  "Frontend_main",
-  "assets",
+  assetsPath,
   "fonts",
   "NotoSansKannada-Regular.ttf",
 );
@@ -47,14 +54,7 @@ const FONT_KANNADA_REG = path.join(
 const FONT_KANNADA = fs.existsSync(FONT_KANNADA_REG)
   ? FONT_KANNADA_REG
   : FONT_KANNADA_VAR;
-const FONT_LATIN = path.join(
-  __dirname,
-  "..",
-  "Frontend_main",
-  "assets",
-  "fonts",
-  "NotoSans-Regular.ttf",
-);
+const FONT_LATIN = path.join(assetsPath, "fonts", "NotoSans-Regular.ttf");
 
 // Summarize SODA results into category counts
 function summarizeSODA(results = []) {
@@ -106,8 +106,15 @@ app.use(express.json());
 // Setup multer for handling file uploads
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Serve static files (place this before API routes)
-app.use(express.static(path.join(__dirname, "..", "Frontend_main")));
+// Serve static files - adjusted for Docker deployment
+// In Docker, frontend files are copied to /app root, not /app/Frontend_main
+const frontendPath =
+  process.env.NODE_ENV === "production" &&
+  !fs.existsSync(path.join(__dirname, "..", "Frontend_main"))
+    ? __dirname // Docker: files are in /app
+    : path.join(__dirname, "..", "Frontend_main"); // Local: files are in ../Frontend_main
+
+app.use(express.static(frontendPath));
 
 // Start server after attempting MongoDB connection
 (async () => {
@@ -395,7 +402,13 @@ app.use(express.static(path.join(__dirname, "..", "Frontend_main")));
   });
 
   app.get("/download-reference-pdf", (req, res) => {
-    const imgPath = path.join(__dirname, "..", "Frontend_main", "assets", "reference.jpg");
+    const imgPath = path.join(
+      __dirname,
+      "..",
+      "Frontend_main",
+      "assets",
+      "reference.jpg",
+    );
     if (!fs.existsSync(imgPath)) {
       return res.status(404).send("Image not found");
     }
@@ -524,19 +537,28 @@ app.use(express.static(path.join(__dirname, "..", "Frontend_main")));
       doc.pipe(res);
 
       // Register Kannada font if available
+      console.log("📝 PDF Generation - Font paths:");
+      console.log("  FONT_KANNADA:", FONT_KANNADA);
+      console.log("  FONT_LATIN:", FONT_LATIN);
+      console.log("  Kannada exists:", fs.existsSync(FONT_KANNADA));
+      console.log("  Latin exists:", fs.existsSync(FONT_LATIN));
+
       const useKannadaFont = fs.existsSync(FONT_KANNADA);
       if (useKannadaFont) {
+        console.log("✅ Registering Kannada font:", FONT_KANNADA);
         doc.registerFont("Kannada", FONT_KANNADA);
         doc.registerFont("KannadaBold", FONT_KANNADA); // Use same font for bold
-      }
-      if (fs.existsSync(FONT_LATIN)) {
-        doc.registerFont("Latin", FONT_LATIN);
+      } else {
+        console.warn("⚠️ Kannada font not found, using Helvetica fallback");
       }
 
       if (fs.existsSync(FONT_LATIN)) {
+        console.log("✅ Registering Latin font:", FONT_LATIN);
+        doc.registerFont("Latin", FONT_LATIN);
         doc.registerFont("ipa", FONT_LATIN);
+      } else {
+        console.warn("⚠️ Latin font not found, using Helvetica fallback");
       }
-  
 
       // Kannada translations
       // const labels = {
@@ -570,38 +592,36 @@ app.use(express.static(path.join(__dirname, "..", "Frontend_main")));
       //   distortionType: "ವಿರೂಪ",
       // };
 
-      // Helper function to translate gender
-      const translateGender = (gender) => {
-        if (!gender) return labels.na;
-        const g = gender.toLowerCase();
-        if (g === "male") return labels.male;
-        if (g === "female") return labels.female;
-        if (g === "other") return labels.other;
-        return gender;
-      };
+      // Helper functions commented out since labels object is not used
+      // const translateGender = (gender) => {
+      //   if (!gender) return labels.na;
+      //   const g = gender.toLowerCase();
+      //   if (g === "male") return labels.male;
+      //   if (g === "female") return labels.female;
+      //   if (g === "other") return labels.other;
+      //   return gender;
+      // };
 
-      // Helper function to translate error type
-      const translateErrorType = (errorType) => {
-        if (!errorType) return labels.na;
-        const e = errorType.toLowerCase();
-        if (e === "correct") return labels.correctType;
-        if (e === "substitution") return labels.substitutionType;
-        if (e === "omission") return labels.omissionType;
-        if (e === "addition") return labels.additionType;
-        if (e === "distortion") return labels.distortionType;
-        return errorType;
-      };
+      // const translateErrorType = (errorType) => {
+      //   if (!errorType) return labels.na;
+      //   const e = errorType.toLowerCase();
+      //   if (e === "correct") return labels.correctType;
+      //   if (e === "substitution") return labels.substitutionType;
+      //   if (e === "omission") return labels.omissionType;
+      //   if (e === "addition") return labels.additionType;
+      //   if (e === "distortion") return labels.distortionType;
+      //   return errorType;
+      // };
 
       // Set default font to Kannada if available, otherwise Helvetica
       const defaultFont = useKannadaFont ? "Kannada" : "Helvetica";
       const boldFont = useKannadaFont ? "KannadaBold" : "Helvetica-Bold";
 
-
       doc
-      .fontSize(20)
-      .font(fs.existsSync(FONT_KANNADA) ? "KannadaBold" : "Helvetica-Bold")
-      .text("ಮಗುವಿನ ಪ್ರಗತಿ ವರದಿ", { align: "center" })
-      .moveDown(0.5);
+        .fontSize(20)
+        .font(fs.existsSync(FONT_KANNADA) ? "KannadaBold" : "Helvetica-Bold")
+        .text("ಮಗುವಿನ ಪ್ರಗತಿ ವರದಿ", { align: "center" })
+        .moveDown(0.5);
 
       // Child details
       doc
@@ -677,7 +697,9 @@ app.use(express.static(path.join(__dirname, "..", "Frontend_main")));
 
         doc.fontSize(10).font(latinFont);
         doc.text("Error Type | Target Word | Spoken Phonemes");
-        doc.text("------------------------------------------------------------");
+        doc.text(
+          "------------------------------------------------------------",
+        );
 
         rows.forEach((r) => {
           const spoken = r.spoken_ipa || r.spoken || r.spoken_phonemes || "";
@@ -748,7 +770,7 @@ app.use(express.static(path.join(__dirname, "..", "Frontend_main")));
 
       doc
         .fontSize(11)
-        .font(hasKannadaFont ? "Kannada" : "latinFont")
+        .font(hasKannadaFont ? "Kannada" : latinFont)
         .text(
           Array.isArray(payload.practiceList) && payload.practiceList.length
             ? payload.practiceList.join(", ")
@@ -944,6 +966,74 @@ app.use(express.static(path.join(__dirname, "..", "Frontend_main")));
         });
       }
     }
+  });
+
+  // Proxy endpoint for IPA to Kannada conversion
+  app.post("/ipa2kannada", async (req, res) => {
+    try {
+      console.log("📥 Received IPA2Kannada request:", req.body);
+
+      // Validate input
+      if (!req.body.syllables || !Array.isArray(req.body.syllables)) {
+        return res.status(400).json({
+          error: "Missing or invalid syllables parameter",
+        });
+      }
+
+      console.log(
+        `🔗 Proxying IPA2Kannada request to ${PYTHON_BACKEND_URL}/ipa2kannada`,
+      );
+
+      const response = await axios.post(
+        `${PYTHON_BACKEND_URL}/ipa2kannada`,
+        req.body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          timeout: 10000, // 10 second timeout
+        },
+      );
+
+      console.log("✅ IPA2Kannada conversion successful");
+      res.json(response.data);
+    } catch (error) {
+      console.error("❌ IPA2Kannada proxy error:", error.message);
+
+      if (error.response) {
+        // Python backend returned an error
+        console.error("Python backend error:", error.response.data);
+        res.status(error.response.status).json(error.response.data);
+      } else if (error.code === "ECONNREFUSED") {
+        // Python backend not accessible
+        res.status(503).json({
+          error: "Python backend unavailable",
+          details: `Cannot connect to ${PYTHON_BACKEND_URL}. Make sure Flask server is running.`,
+        });
+      } else if (error.code === "ETIMEDOUT") {
+        res.status(504).json({
+          error: "Request timeout",
+          details: "Python backend took too long to respond",
+        });
+      } else {
+        res.status(500).json({
+          error: "Failed to convert IPA to Kannada",
+          details: error.message || "Unknown error occurred",
+          code: error.code,
+        });
+      }
+    }
+  });
+
+  // Fallback: serve index.html for any unknown route (SPA fallback - MUST be last)
+  // Express 5 requires named wildcard parameter syntax instead of just "*"
+  app.get("/{*splat}", (req, res) => {
+    const indexPath =
+      process.env.NODE_ENV === "production" &&
+      !fs.existsSync(path.join(__dirname, "..", "Frontend_main", "index.html"))
+        ? path.join(__dirname, "index.html") // Docker: index.html is in /app
+        : path.join(__dirname, "..", "Frontend_main", "index.html"); // Local: ../Frontend_main/index.html
+    res.sendFile(indexPath);
   });
 
   // Start server (wrapped in async function at top)

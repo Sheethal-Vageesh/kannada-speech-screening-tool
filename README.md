@@ -2,9 +2,16 @@
 
 A full-stack web application for assessing speech development in Kannada-speaking children using SODA (Schedule of Developing Articulation) analysis.
 
+## � Project Info
+
+- **Size**: 16.39 MB (under 500MB limit ✅)
+- **Docker Ready**: Yes ✅
+- **Render Compatible**: Yes ✅
+- **Free Tier Friendly**: Yes ✅
+
 ## 🚀 Quick Deploy to Render.com (FREE)
 
-### Prerequisites
+### 📋 Prerequisites
 
 - GitHub account
 - MongoDB Atlas account (free tier)
@@ -12,13 +19,35 @@ A full-stack web application for assessing speech development in Kannada-speakin
 
 ### Deploy in 3 Steps:
 
-#### 1. Clone and Setup
+#### 1. Validate Deployment
+
+**Windows:**
+
+```powershell
+.\vkannada-speech-screening-tool
+cd Backend_main
+npm install
+```
+
+#### 3. Configure Environment Variables
+
+Copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` with your credentials (never commit this!):
+
+````
+
+#### 2. Clone and Setup
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/kannada-speech-screening-tool.git
 cd Backend_main
 npm install
-```
+````
 
 #### 2. Configure Environment Variables
 
@@ -40,6 +69,7 @@ FFMPEG_PATH=/usr/bin/ffmpeg
 ALLOWED_ORIGINS=https://your-app.onrender.com
 ```
 
+4
 **Generate JWT Secret:**
 
 ```bash
