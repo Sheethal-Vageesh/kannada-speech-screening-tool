@@ -633,10 +633,10 @@ app.use(express.static(path.join(__dirname, "..", "Frontend_main")));
         .text(
           `ಪರೀಕ್ಷೆಯ ದಿನಾಂಕ: ${report.date ? new Date(report.date).toLocaleString() : ""}`,
         )
-        .text(`ಒಟ್ಟು ಸರಿಯಾದವು: ${summary.Correct ?? 0}`)
-        .text(
-          `ಒಟ್ಟು ತಪ್ಪುಗಳು: ${(summary.Substitution ?? 0) + (summary.Omission ?? 0) + (summary.Addition ?? 0) + (summary.Distortion ?? 0)}`,
-        )
+        // .text(`ಒಟ್ಟು ಸರಿಯಾದವು: ${summary.Correct ?? 0}`)
+        // .text(
+        //   `ಒಟ್ಟು ತಪ್ಪುಗಳು: ${(summary.Substitution ?? 0) + (summary.Omission ?? 0) + (summary.Addition ?? 0) + (summary.Distortion ?? 0)}`,
+        // )
         .moveDown(0.6);
 
       // SODA table grouped by error type (simple text layout to avoid PDF NaN issues)

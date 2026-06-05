@@ -120,3 +120,216 @@ body {
     opacity: 1;
   }
 }
+
+/* =====================================
+   SCREENING PAGE LAYOUT
+===================================== */
+
+.screening-layout{
+    max-width:1400px;
+    margin:100px auto 40px;
+    padding:0 20px;
+
+    display:grid;
+    grid-template-columns:400px 1fr;
+    gap:40px;
+
+    align-items:start;
+}
+
+/* =====================================
+   INSTRUCTION PANEL
+===================================== */
+
+.instruction-panel{
+    width:100%;
+}
+
+.instruction-box{
+    background:#ffffff;
+    border-radius:24px;
+    padding:20px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+   
+    text-align:left;
+    margin: auto;
+    margin-top: -70px;
+}
+
+.instruction-box h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#2E7D32;
+}
+
+.instruction-box ul{
+    padding-left:25px;
+}
+
+.instruction-box li{
+    margin-bottom:12px;
+    line-height:1.8;
+    font-size:16px;
+}
+
+.note-box{
+    margin-top:20px;
+    background:#FFF8E1;
+    border-left:5px solid #FFB300;
+    padding:15px;
+    border-radius:12px;
+    font-weight:600;
+}
+
+/* =====================================
+   SCREENING CARD
+===================================== */
+
+.game-card{
+
+    background:#fdf9f0;
+
+    border-radius:30px;
+
+    padding:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+
+    text-align:center;
+
+    width:100%;
+
+    max-width:700px;
+
+    justify-self:center;
+    margin: auto;
+     margin-top: -70px;
+}
+
+.word-title{
+    font-size:3rem;
+    color:#4e342e;
+    margin-bottom:20px;
+}
+
+.image-wrapper{
+    margin-bottom:20px;
+}
+
+.image-wrapper img{
+    width:320px;
+    max-width:100%;
+    border-radius:20px;
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+
+.audio-player{
+    width:80%;
+    margin:20px auto;
+    display:block;
+}
+
+.instruction{
+    margin:15px 0;
+    font-size:20px;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+
+    margin-top:20px;
+}
+
+.btn{
+    border:none;
+    border-radius:30px;
+    padding:14px 25px;
+    color:white;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.record{
+    background:#ff7043;
+}
+
+.stop{
+    background:#ef5350;
+}
+
+.analyze{
+    background:#42a5f5;
+}
+
+.status-text{
+    margin-top:15px;
+}
+
+.next-btn{
+    margin-top:30px;
+    background:#66bb6a;
+    color:white;
+    border:none;
+    padding:15px 30px;
+    border-radius:30px;
+    cursor:pointer;
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media(max-width:1024px){
+
+    .screening-layout{
+        display:flex;
+        flex-direction:column;
+    }
+
+    .instruction-panel{
+        width:100%;
+    }
+
+    .game-card{
+        width:100%;
+        max-width:700px;
+        margin:auto;
+    }
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media(max-width:768px){
+
+    .screening-layout{
+        margin-top:80px;
+        padding:0 10px;
+        gap:20px;
+    }
+
+    .instruction-box{
+        padding:20px;
+    }
+
+    .instruction-box li{
+        font-size:16px;
+    }
+
+    .word-title{
+        font-size:2rem;
+    }
+
+    .image-wrapper img{
+        width:220px;
+    }
+
+    .audio-player{
+        width:100%;
+    }
+}

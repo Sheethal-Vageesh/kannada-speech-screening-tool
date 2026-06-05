@@ -1,24 +1,275 @@
+
+
 <!DOCTYPE html>
 <html lang="kn">
 <head>
-  <meta charset="UTF-8">
-  <title>ವಯಸ್ಸನ್ನು ಆಯ್ಕೆಮಾಡಿ</title>
-  <link rel="stylesheet" href="css/style.css">
-  <!-- Lottie Files Animation Script -->
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ವಯಸ್ಸನ್ನು ಆಯ್ಕೆಮಾಡಿ</title>
+    <link rel="stylesheet" href="css/style.css">
 
+    <!-- Lottie -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <style>
+        *{
+              margin:0;
+              padding:0;
+              box-sizing:border-box;
+              font-family: "Noto Sans Kannada", sans-serif;
+          }
+
+          body{
+              min-height:100vh;
+              background:linear-gradient(135deg,#f0f8ff,#eef7f2);
+              padding:20px;
+          }
+
+          /* Main Layout */
+          .main-content{
+              max-width:1400px;
+              margin:40px auto;
+              display:flex;
+              gap:40px;
+              align-items:flex-start;
+          }
+
+          /* LEFT SIDE */
+          .left-panel{
+              flex:1.5;
+          }
+
+          .instruction-box{
+              background:white;
+              border-radius:24px;
+              padding:35px;
+              box-shadow:0 10px 30px rgba(0,0,0,.08);
+          }
+
+      .instruction-box h2{
+          text-align:center;
+          color:#1565C0;
+          margin-bottom:15px;
+          font-size:24px;
+      }
+
+      .welcome{
+          text-align:center;
+          font-size:16px;
+          margin-bottom:25px;
+          color:#555;
+      }
+
+      .instruction-box h3{
+          color:#2E7D32;
+          margin-bottom:15px;
+          margin-top: 20px;
+          text-align:left;
+      }
+
+      /* IMPORTANT */
+      .instruction-box ul{
+          padding-left:28px;
+          margin-top:15px;
+      }
+
+      .instruction-box li{
+          text-align:left;
+          font-size:14px;
+          line-height:1.8;
+          margin-bottom:10px;
+          color:#333;
+      }
+
+      .note{
+          margin-top:25px;
+          background:#FFF8E1;
+          border-left:6px solid #FFB300;
+          padding:18px;
+          border-radius:12px;
+          font-size:16px;
+          font-weight:600;
+      }
+
+      /* RIGHT SIDE */
+      .right-panel{
+          flex:1;
+          position:sticky;
+          top:120px;
+      }
+
+      .selection-card{
+          background:white;
+          border-radius:24px;
+          padding:35px;
+          text-align:center;
+          box-shadow:0 10px 30px rgba(0,0,0,.08);
+      }
+
+      .selection-card h2{
+          color:#2E7D32;
+          
+      }
+
+      .age-circles{
+          display:flex;
+          justify-content:center;
+          gap:30px;
+          flex-wrap:wrap;
+      }
+
+      .age-circles div{
+          width:120px;
+          height:120px;
+          border-radius:50%;
+          background:linear-gradient(
+              135deg,
+              #42A5F5,
+              #1E88E5
+          );
+          color:white;
+          font-size:42px;
+          font-weight:bold;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          cursor:pointer;
+          transition:.3s;
+          box-shadow:0 8px 20px rgba(0,0,0,.15);
+          margin-bottom: 30px;
+      }
+
+      .age-circles div:hover{
+          transform:translateY(-10px) scale(1.08);
+          box-shadow:0 15px 30px rgba(30,136,229,.35);
+      }
+
+      /* Label under buttons */
+      .age-label{
+          margin-top:25px;
+          font-size:18px;
+          color:#555;
+          font-weight:600;
+      }
+
+      /* Mobile + Tablet */
+      @media(max-width:992px){
+
+          .main-content{
+              flex-direction:column;
+          }
+
+          .right-panel{
+              position:static;
+              width:100%;
+          }
+
+          .instruction-box,
+          .selection-card{
+              width:100%;
+          }
+      }
+
+      @media(max-width:768px){
+
+          .instruction-box{
+              padding:20px;
+          }
+
+          .instruction-box h2{
+              font-size:28px;
+          }
+
+          .instruction-box li{
+              font-size:16px;
+          }
+
+          .age-circles div{
+              width:90px;
+              height:90px;
+              font-size:34px;
+          }
+      }
+    </style>
 </head>
 <body>
-   <!-- ✅ header.html (Reusable Header Component) -->
-   <div id="global-header"></div>
 
-  <div class="age-circles">
-    <div onclick="selectAge(2)">2</div>
-    <div onclick="selectAge(5)">5</div>
-    <div onclick="selectAge(7)">7</div>
-  </div>
-  <script src="js/app.js"></script>
-  <script src="js/header.js"></script>
+<div class="container">
+     <div id="global-header"></div>
+      <div class="main-content">
+
+          <!-- LEFT SIDE -->
+          <div class="left-panel">
+
+              <lottie-player
+                  src="https://assets10.lottiefiles.com/packages/lf20_h4th9ofg.json"
+                  background="transparent"
+                  speed="1"
+                  style="width:220px;height:220px;margin:auto;"
+                  loop
+                  autoplay>
+              </lottie-player>
+
+              <div class="instruction-box">
+
+                  <!-- <h2>👶 ವಯಸ್ಸನ್ನು ಆಯ್ಕೆಮಾಡಿ</h2>
+
+                  <p class="welcome">
+                      ಮಗುವಿನ ವಯಸ್ಸಿಗೆ ಅನುಗುಣವಾಗಿ ಕೆಳಗಿನ ಆಯ್ಕೆಯೊಂದನ್ನು ಆಯ್ಕೆಮಾಡಿ.
+                  </p> -->
+
+                  <h3>📋 ಸೂಚನೆಗಳು</h3>
+
+                  <ul>
+                      <li>ಮಗುವಿನ ವಯಸ್ಸು <b>2 ರಿಂದ 4 ವರ್ಷಗಳ ನಡುವೆ</b> ಇದ್ದರೆ <b>2</b> ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ.</li>
+
+                      <li>ಮಗುವಿನ ವಯಸ್ಸು <b>5 ರಿಂದ 6 ವರ್ಷಗಳ ನಡುವೆ</b> ಇದ್ದರೆ <b>5</b> ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ.</li>
+
+                      <li>ಮಗುವಿನ ವಯಸ್ಸು <b>7 ವರ್ಷ ಅಥವಾ ಅದಕ್ಕಿಂತ ಹೆಚ್ಚು</b> ಇದ್ದರೆ <b>7</b> ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ.</li>
+
+                      <li>ಆಯ್ಕೆ ಮಾಡಿದ ನಂತರ ವಯಸ್ಸಿಗೆ ಅನುಗುಣವಾದ ಪದಗಳು ಮತ್ತು ಚಿತ್ರಗಳು ಪ್ರದರ್ಶಿಸಲಾಗುತ್ತವೆ.</li>
+
+                      <li>ಮಗುವು ಪ್ರತಿಯೊಂದು ಪದವನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಉಚ್ಚರಿಸುವಂತೆ ಪ್ರೋತ್ಸಾಹಿಸಿ.</li>
+
+                      <li>ಪರೀಕ್ಷೆಯನ್ನು ಶಾಂತವಾದ ಮತ್ತು ಅಡಚಣೆರಹಿತ ಪರಿಸರದಲ್ಲಿ ನಡೆಸುವುದು ಉತ್ತಮ.</li>
+                  </ul>
+
+                  <div class="note">
+                      ⚠️ ಸರಿಯಾದ ಫಲಿತಾಂಶಕ್ಕಾಗಿ ಮಗುವಿನ ನಿಜವಾದ ವಯಸ್ಸಿನ ಶ್ರೇಣಿಗೆ ಹೊಂದುವ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ.
+                  </div>
+
+              </div>
+
+          </div>
+
+          <!-- RIGHT SIDE -->
+          <div class="right-panel">
+
+              <div class="selection-card">
+
+                  <h2>🎯 ವಯಸ್ಸಿನ ಆಯ್ಕೆ</h2>
+
+                  <div class="age-circles">
+                      <div onclick="selectAge(2)">2</div>
+                      <div onclick="selectAge(5)">5</div>
+                      <div onclick="selectAge(7)">7</div>
+                  </div>
+
+                  <div class="age-label">
+                      ಮಗುವಿನ ವಯಸ್ಸಿಗೆ ಅನುಗುಣವಾಗಿ ಸೂಕ್ತ ಆಯ್ಕೆಯೊಂದನ್ನು ಮಾಡಿ. 
+                  </div>
+
+              </div>
+
+          </div>
+
+      </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/header.js"></script>
+
 </body>
 </html>
 

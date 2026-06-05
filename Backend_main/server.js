@@ -296,7 +296,7 @@ app.post("/api/generate-report", (req, res) => {
       ? report.sodaResults
       : [];
     const summary = {
-      Correct: report.summary?.Correct ?? 0,
+      Correct: report.summary.Correct ?? 0,
       Substitution: report.summary?.Substitution ?? 0,
       Omission: report.summary?.Omission ?? 0,
       Addition: report.summary?.Addition ?? 0,
@@ -372,10 +372,10 @@ app.post("/api/generate-report", (req, res) => {
       .text(
         `ಪರೀಕ್ಷೆಯ ದಿನಾಂಕ: ${report.date ? new Date(report.date).toLocaleString() : ""}`,
       )
-      .text(`ಒಟ್ಟು ಸರಿಯಾದವು: ${summary.Correct ?? 0}`)
-      .text(
-        `ಒಟ್ಟು ತಪ್ಪುಗಳು: ${(summary.Substitution ?? 0) + (summary.Omission ?? 0) + (summary.Addition ?? 0) + (summary.Distortion ?? 0)}`,
-      )
+      // .text(`ಒಟ್ಟು ಸರಿಯಾದವು: ${summary.Correct ?? 0}`)
+      // .text(
+      //   `ಒಟ್ಟು ತಪ್ಪುಗಳು: ${(summary.Substitution ?? 0) + (summary.Omission ?? 0) + (summary.Addition ?? 0) + (summary.Distortion ?? 0)}`,
+      // )
       .moveDown(0.6);
 
     // SODA table grouped by error type (simple text layout to avoid PDF NaN issues)

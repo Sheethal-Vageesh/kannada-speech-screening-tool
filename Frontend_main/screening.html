@@ -6,33 +6,78 @@
     <link rel="stylesheet" href="css/kid-ui.css" />
   </head>
   <body>
-    <div class="game-card">
-      <h2 id="word" class="word-title">ಅಮ್ಮ</h2>
+    <div id="global-header"></div>
+    <div class="screening-layout">
 
-      <div class="image-wrapper">
-        <img id="image" alt="word image" />
+      <!-- LEFT SIDE -->
+      <div class="instruction-panel">
+
+          <div class="instruction-box">
+
+              <h3>📋 ಸೂಚನೆಗಳು</h3>
+
+              <ul>
+                  <li>ಚಿತ್ರವನ್ನು ಗಮನವಿಟ್ಟು ನೋಡಿ.</li>
+
+                  <li>🔊 ಆಡಿಯೊವನ್ನು ಕೇಳಿ.</li>
+
+                  <li>🎙️ "ಆರಂಭ" ಬಟನ್ ಒತ್ತಿ ಪದವನ್ನು ಉಚ್ಚರಿಸಿ.</li>
+
+                  <li>⏹️ ಉಚ್ಚಾರಣೆ ಮುಗಿದ ನಂತರ "ನಿಲ್ಲಿಸಿ" ಬಟನ್ ಒತ್ತಿ.</li>
+
+                  <li>🧠 "ಪರಿಶೀಲನೆ" ಬಟನ್ ಒತ್ತಿ ಫಲಿತಾಂಶವನ್ನು ವೀಕ್ಷಿಸಿ.</li>
+
+                  <li>👉 ನಂತರ "ಮುಂದಿನ ಪದ" ಬಟನ್ ಒತ್ತಿ.</li>
+              </ul>
+
+              <div class="note-box">
+                  ⚠️ ಪದವನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಮತ್ತು ನಿಧಾನವಾಗಿ ಉಚ್ಚರಿಸಿ.
+              </div>
+
+          </div>
+
       </div>
 
-      <audio id="audio" controls class="audio-player"></audio>
+      <!-- RIGHT SIDE -->
+      <div class="game-card">
 
-      <p class="instruction">🎧 ಕೇಳಿ ಮತ್ತು ಹೇಳಿ</p>
+          <h2 id="word" class="word-title">ಅಮ್ಮ</h2>
 
-      <div id="letter-buttons"></div>
+          <div class="image-wrapper">
+              <img id="image" alt="word image" />
+          </div>
 
-      <div class="controls">
-        <button id="recordBtn" class="btn record">🎙️ ಆರಂಭ</button>
-        <button id="stopBtn" class="btn stop" disabled>⏹️ ನಿಲ್ಲಿಸಿ</button>
-        <button id="analyzeBtn" class="btn analyze" disabled>
-          🧠 ಪರಿಶೀಲನೆ
-        </button>
+          <audio id="audio" controls class="audio-player"></audio>
 
-        <p id="status" class="status-text"></p>
+          <p class="instruction">🎧 ಕೇಳಿ ಮತ್ತು ಹೇಳಿ</p>
+
+          <div id="letter-buttons"></div>
+
+          <div class="controls">
+
+              <button id="recordBtn" class="btn record">
+                  🎙️ ಆರಂಭ
+              </button>
+
+              <button id="stopBtn" class="btn stop" disabled>
+                  ⏹️ ನಿಲ್ಲಿಸಿ
+              </button>
+
+              <button id="analyzeBtn" class="btn analyze" disabled>
+                  🧠 ಪರಿಶೀಲನೆ
+              </button>
+
+              <p id="status" class="status-text"></p>
+
+          </div>
+
+          <button onclick="nextWord()" class="next-btn">
+              👉 ಮುಂದಿನ ಪದ
+          </button>
+
       </div>
 
-      <!-- <pre id="resultBox"></pre> -->
-      <button onclick="nextWord()" class="next-btn">👉 ಮುಂದಿನ ಪದ</button>
-    </div>
-
+  </div>
     <script src="js/config.js"></script>
     <script src="js/screening.js"></script>
     <script src="assets/js/auto-record.js"></script>

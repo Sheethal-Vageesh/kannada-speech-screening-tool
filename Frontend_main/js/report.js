@@ -523,10 +523,10 @@ async function buildReportDetails(report) {
   if (filteredPractice.length === 0 && uniquePractice.length > 0) {
     suggestionText =
       "ಸಣ್ಣ ಧ್ವನಿತ ದೋಷಗಳು ಮಾತ್ರ ಕಂಡುಬಂದಿವೆ ಆದರೆ ಮಗುವಿನ ವಯಸ್ಸಿಗೆ ಅನುಗುಣವಾಗಿ ಅಗತ್ಯವಿರುವ ಎಲ್ಲಾ ಧ್ವನಿಗಳ ಉಚ್ಚಾರಣೆ ಸರಿಯಾಗಿ ಬರುತ್ತಿದೆ. ಚಿಂತಿಸಬೇಕಾದ ಅಗತ್ಯವಿಲ್ಲ. ಮಗು ಸಾಮಾನ್ಯವಾಗಿದೆ. ಆದರೂ ನಿರಂತರವಾಗಿ ಅಭ್ಯಾಸ ಮಾಡಿಸುತ್ತಿರಲಿ.";
-  } else if (filteredPractice.length > 0 && filteredPractice.length <= 2) {
+  } else if (filteredPractice.length > 0 && filteredPractice.length <= 3) {
     suggestionText =
       "ಕೆಲವು ಧ್ವನಿಗಳಲ್ಲಿ ಮಾತ್ರ ಸ್ವಲ್ಪ ಕಷ್ಟ ಕಂಡುಬಂದಿದೆ. ನಿಯಮಿತ ಅಭ್ಯಾಸದಿಂದ ಮಗು ಸುಲಭವಾಗಿ ಸುಧಾರಿಸಬಹುದು. ದಿನನಿತ್ಯ ಅಭ್ಯಾಸ ಮಾಡಿಸಲು ಸಲಹೆ ನೀಡಲಾಗುತ್ತದೆ.";
-  } else if (filteredPractice.length > 2) {
+  } else if (filteredPractice.length > 3) {
     suggestionText =
       "ಅನೇಕ ಧ್ವನಿಗಳ ಉಚ್ಚಾರಣೆಯಲ್ಲಿ ತೊಂದರೆ ಕಂಡುಬಂದಿದೆ. ಸಮಯಕ್ಕೆ ಸರಿಯಾಗಿ ಸ್ಪೀಚ್ ಥೆರಪಿಸ್ಟ್ ಅವರನ್ನು ಸಂಪರ್ಕಿಸುವುದು ಉತ್ತಮ.";
   } else {
